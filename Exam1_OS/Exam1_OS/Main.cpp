@@ -3,6 +3,8 @@
 #include <mutex>
 #include <cstdlib>
 #include <ctime>
+#include <string>
+#include <vector>
 using namespace std;
 
 // Alex Blair
@@ -10,39 +12,65 @@ using namespace std;
 // 3-5-17
 // Exam 1
 
+// Create a vector of integers to store the factors
 
-mutex m;
-int factors = 99;
+void factorize() {
+     // Generate a random number between 1 and 10,000
+     int randval = rand() % 10000 + 1;
+     vector<int> factors;
+     for (unsigned int i = 0; i < factors.size(); i++) {
+          // Set the random value to a variable
+          int x = randval;
+          // Set the changable variable
+          int modnum = x;
 
-void countdown(int i) {
-     int b = 0;
-     do {
-          int w = rand() % 500 + 100;
-          {
-               lock_guard<mutex> g(m);
-               b = factors;
+          int result = x % modnum;
+
+          if (result == 0) {
+               factors.push_back(modnum);
+               modnum--;
           }
-          cout << i << ": " << b << " bottles of coke on the wall\n";
-          cout << i << ": " << b << " bottles of coke\n";
-          this_thread::sleep_for(chrono::milliseconds(w));
-          cout << i << ": " << b << " take one down, pass it around\n";
-          this_thread::sleep_for(chrono::milliseconds(w));
+          else
           {
-               lock_guard<mutex> g(m);
-               factors--;
-               b = factors;
+               modnum--;
           }
-          cout << i << ": " << b << " bottles of coke on the wall\n";
-     } while (b > 0);
+
+          for (vector<int>::const_iterator i = factors.begin(); i != factors.end(); i++)
+          {
+               cout << *i << " " << endl;
+          }
+
+     }
 }
 
 int main() {
+
+     // Create a vector of integers to store the factors
+     vector<int> factors;
+     // Create the random number seed
      srand(time(NULL));
-     thread t0, t1;
 
-     t0 = thread(countdown, 0);
-     t1 = thread(countdown, 1);
 
-     t0.join();
-     t1.join();
+     factorize();
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     return 0;
 }
+
+
+
+
+
